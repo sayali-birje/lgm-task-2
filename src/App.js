@@ -1,25 +1,30 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+const App=()=>{
+  const [users,setUser]=useState([]);
+  const loadUsers=async()=>{
+    const response= await fetch("https://api.github.com/users");
+    const jsonresponse= await response.json();
+    setUser(jsonresponse);
+  }
+  return(
+  <div className='App'>
+     <h1 className='heading'>LGMVIP-Task 2</h1>
+     <button className='btn' onClick={loadUsers}>Get Data</button>
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+     <h3 className='heading2'>Users</h3>
+     <ul className='ul'>
+     {users.map(({id,login,avatar_url})=>(
+        <li className='li' key={id}>Name: {login} ||
+        Avatar :{avatar_url}
+        </li>
+     ))}
+     </ul>
+  </div>
+  
   );
 }
+
+
 
 export default App;
